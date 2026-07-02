@@ -1,0 +1,204 @@
+---
+const activities = [
+  {
+    icon: '🧘',
+    title: 'Yoga',
+    desc: 'Diferentes estilos — hatha, yin, vinyasa — para todos los niveles y momentos vitales.',
+  },
+  {
+    icon: '💃',
+    title: 'Danzaterapia',
+    desc: 'La danza como herramienta de expresión emocional y liberación. El cuerpo que cuenta lo que las palabras no pueden.',
+  },
+  {
+    icon: '🩰',
+    title: 'Danza Contemporánea',
+    desc: 'Técnica y creatividad al servicio del movimiento. Sin barreras, sin límites de edad.',
+  },
+  {
+    icon: '🏋️',
+    title: 'Entrenamiento Funcional',
+    desc: 'Fuerza y movilidad para la vida real. Ejercicios que te preparan para moverte mejor cada día.',
+  },
+  {
+    icon: '🌿',
+    title: 'Movimientos Conscientes',
+    desc: 'Técnicas que unen respiración, atención plena y movimiento para calmar el sistema nervioso.',
+  },
+  {
+    icon: '🩺',
+    title: 'Barrefit',
+    desc: 'Lo mejor de la barra de ballet, el pilates y el fitness en una clase fluida y de bajo impacto.',
+  },
+  {
+    icon: '🤸',
+    title: 'Pilates',
+    desc: 'Control, respiración y conciencia corporal. Ideal para la rehabilitación y el fortalecimiento profundo.',
+  },
+  {
+    icon: '👥',
+    title: 'Entreno Personal y en Pareja',
+    desc: 'Sesiones adaptadas a tus objetivos, sola o acompañada. Progreso real, personalizado.',
+  },
+  {
+    icon: '🤰',
+    title: 'Embarazo y Postparto',
+    desc: 'Programas específicos para cada etapa de la maternidad. Cuidado, respeto y acompañamiento.',
+  },
+];
+---
+
+<section class="activities" id="actividades">
+  <div class="activities__inner container">
+    <header class="activities__header">
+      <span class="section-label">Nuestras actividades</span>
+      <h2 class="section-title">Un espacio para cada mujer,<br /><em>un movimiento para cada momento.</em></h2>
+      <p class="activities__intro">
+        Ofrecemos una amplia variedad de disciplinas diseñadas para adaptarse a ti — tu cuerpo, tu ritmo, tu momento vital.
+      </p>
+    </header>
+
+    <div class="activities__grid">
+      {activities.map(({ icon, title, desc }) => (
+        <article class="activity-card reveal">
+          <span class="activity-card__icon" aria-hidden="true">{icon}</span>
+          <h3 class="activity-card__title">{title}</h3>
+          <p class="activity-card__desc">{desc}</p>
+        </article>
+      ))}
+
+      <article class="activity-card activity-card--more reveal">
+        <span class="activity-card__icon" aria-hidden="true">✨</span>
+        <h3 class="activity-card__title">Y mucho más por venir</h3>
+        <p class="activity-card__desc">
+          El proyecto sigue creciendo. Nuevas actividades, talleres y propuestas especiales en camino.
+        </p>
+      </article>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="activities__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,50 C360,0 1080,80 1440,30 L1440,80 L0,80 Z" fill="#163330"/>
+    </svg>
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // stagger delay based on position in viewport batch
+          const delay = (i % 4) * 80;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  cards.forEach(card => io.observe(card));
+</script>
+
+<style>
+  .activities {
+    position: relative;
+    background: var(--clr-bg-alt);
+    padding-block: 6rem 9rem;
+    overflow: hidden;
+  }
+
+  .activities__header {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+    margin-block-end: 4rem;
+  }
+
+  .activities__header .section-label {
+    display: block;
+    margin-block-end: 0.75rem;
+  }
+
+  .activities__header .section-title em {
+    font-style: italic;
+    color: var(--clr-primary-dark);
+  }
+
+  .activities__intro {
+    margin-block-start: 1.25rem;
+    font-size: 1.05rem;
+    color: var(--clr-text-muted);
+    line-height: 1.75;
+  }
+
+  .activities__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .activity-card {
+    background: var(--clr-white);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    border: 1px solid rgba(75,191,181,0.12);
+    transition: box-shadow var(--transition), transform var(--transition),
+                opacity 0.55s ease, /* for .reveal */
+                transform 0.55s ease;
+  }
+
+  .activity-card:hover {
+    box-shadow: 0 6px 24px rgba(75,191,181,0.14);
+    transform: translateY(-3px) !important; /* override reveal transform */
+  }
+
+  .activity-card--more {
+    border-style: dashed;
+    border-color: var(--clr-primary);
+    background: transparent;
+  }
+
+  .activity-card--more .activity-card__title,
+  .activity-card--more .activity-card__desc {
+    font-style: italic;
+    color: var(--clr-primary-dark);
+  }
+
+  .activity-card__icon {
+    font-size: 2rem;
+    display: block;
+    margin-block-end: 0.75rem;
+    line-height: 1;
+  }
+
+  .activity-card__title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--clr-text);
+    margin-block-end: 0.5rem;
+  }
+
+  .activity-card__desc {
+    font-size: 0.9rem;
+    color: var(--clr-text-muted);
+    line-height: 1.65;
+  }
+
+  .activities__wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    line-height: 0;
+  }
+
+  .activities__wave svg {
+    width: 100%;
+    height: 80px;
+  }
+</style>

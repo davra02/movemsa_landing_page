@@ -1,0 +1,171 @@
+---
+import logoSrc from '../assets/movemsa.jpg';
+---
+
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <a href="#inicio" class="nav__logo" aria-label="MovEmSa inicio">
+      <img src={logoSrc.src} alt="MovEmSa logo" width="48" height="48" />
+    </a>
+
+    <nav class="nav__links" id="nav-links" role="navigation" aria-label="Menú principal">
+      <a href="#por-que">Por qué</a>
+      <a href="#actividades">Actividades</a>
+      <a href="#nosotras">Nosotras</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const hamburger = document.getElementById('hamburger')!;
+  const links = document.getElementById('nav-links')!;
+
+  // Scroll-aware background
+  const sentinel = document.getElementById('inicio') ?? document.body;
+  const observer = new IntersectionObserver(
+    ([entry]) => nav.classList.toggle('nav--scrolled', !entry.isIntersecting),
+    { threshold: 0.1 }
+  );
+  observer.observe(sentinel);
+
+  // Mobile toggle
+  hamburger.addEventListener('click', () => {
+    const open = links.classList.toggle('nav__links--open');
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.classList.toggle('nav__hamburger--open', open);
+  });
+
+  // Close on link click
+  links.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      links.classList.remove('nav__links--open');
+      hamburger.classList.remove('nav__hamburger--open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    })
+  );
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 100;
+    transition: background 300ms ease, box-shadow 300ms ease;
+    padding-block: 0.75rem;
+  }
+
+  .nav--scrolled {
+    background: var(--clr-surface-dark);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__logo img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: invert(1) brightness(1.8) contrast(1.2);
+    mix-blend-mode: screen;
+    transition: opacity var(--transition);
+  }
+
+  .nav__logo:hover img {
+    opacity: 0.8;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav__links a {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color var(--transition);
+  }
+
+  .nav__links a:hover {
+    color: var(--clr-primary);
+  }
+
+  .nav__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav__hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--clr-white);
+    border-radius: 2px;
+    transition: transform 250ms ease, opacity 250ms ease;
+  }
+
+  .nav__hamburger--open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav__hamburger--open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__hamburger--open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .nav__hamburger {
+      display: flex;
+    }
+
+    .nav__links {
+      position: absolute;
+      inset-block-start: 100%;
+      inset-inline: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--clr-surface-dark);
+      padding: 1rem 0 1.5rem;
+      transform: translateY(-110%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 300ms ease, opacity 300ms ease;
+    }
+
+    .nav__links--open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav__links a {
+      padding: 0.75rem 2rem;
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+</style>

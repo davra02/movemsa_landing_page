@@ -1,0 +1,118 @@
+---
+import logoSrc from '../assets/movemsa.jpg';
+---
+
+<section class="hero" id="inicio">
+  <!-- Ghost logo as decorative background -->
+  <div class="hero__ghost" aria-hidden="true">
+    <img src={logoSrc.src} alt="" />
+  </div>
+
+  <div class="hero__content container">
+    <span class="section-label hero__label">Movimiento · Emoción · Salud</span>
+
+    <h1 class="hero__title">
+      Movimiento con propósito.<br />
+      <em>Salud desde adentro.</em>
+    </h1>
+
+    <p class="hero__sub">
+      Clases de ejercicio y rehabilitación para la mujer que entienden que el cuerpo y la mente son inseparables. Porque moverse bien es sentirse bien.
+    </p>
+
+    <div class="hero__actions">
+      <a href="#actividades" class="btn-primary">Descubre las actividades</a>
+      <a href="#por-que" class="btn-outline">Nuestra propuesta</a>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="hero__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C360,90 1080,0 1440,50 L1440,90 L0,90 Z" fill="#F5FAFA"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    background: var(--clr-surface-dark);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero__ghost {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    pointer-events: none;
+  }
+
+  .hero__ghost img {
+    width: min(70vw, 600px);
+    height: auto;
+    filter: invert(1) brightness(1.5);
+    mix-blend-mode: screen;
+    opacity: 0.12;
+    transform: translateX(10%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 9rem 7rem;
+    max-width: 680px;
+  }
+
+  .hero__label {
+    display: block;
+    margin-block-end: 1.5rem;
+    color: var(--clr-primary);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--clr-white);
+    margin-block-end: 1.5rem;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: var(--clr-primary);
+  }
+
+  .hero__sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-block-end: 2.5rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero__wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    line-height: 0;
+  }
+
+  .hero__wave svg {
+    width: 100%;
+    height: 90px;
+  }
+</style>

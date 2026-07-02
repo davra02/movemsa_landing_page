@@ -1,0 +1,170 @@
+---
+import logoSrc from '../assets/movemsa.jpg';
+
+const team = [
+  {
+    initials: 'LM',
+    name: 'Lucía Molero',
+    role: 'Co-fundadora · Graduada en CCAFD · Máster en Salud y Patologías',
+    bio: 'Graduada en Ciencias de la Actividad Física y el Deporte con Máster en Salud y Patologías, Lucía combina la ciencia del movimiento con una formación artística profunda: estudios de Conservatorio, paso por el Centro Andaluz de Alto Rendimiento en danza contemporánea y especialización en pilates y bailes latinos. También formada en entrenamiento adaptado para personas mayores — porque el movimiento no tiene edad.',
+  },
+  {
+    initials: 'ZA',
+    name: 'Zaida Alés',
+    role: 'Co-fundadora · Graduada en CCAFD · Máster en Salud y Patologías',
+    bio: 'Graduada en Ciencias de la Actividad Física y el Deporte con Máster en Salud y Patologías, Zaida aporta una perspectiva única al movimiento: cinturón negro en kárate y formación en yoga. Una trayectoria que le enseñó disciplina, escucha corporal y respeto al proceso — la misma filosofía que aplica en cada sesión de MovEmSa.',
+  },
+];
+---
+
+<section class="team" id="nosotras">
+  <!-- Ghost logo background -->
+  <div class="team__ghost" aria-hidden="true">
+    <img src={logoSrc.src} alt="" />
+  </div>
+
+  <div class="team__inner container">
+    <header class="team__header">
+      <span class="section-label team__label">Sobre nosotras</span>
+      <h2 class="section-title section-title--light">Las personas detrás<br /><em>del movimiento.</em></h2>
+    </header>
+
+    <div class="team__grid">
+      {team.map(({ initials, name, role, bio }) => (
+        <article class="profile-card">
+          <div class="profile-card__avatar" aria-hidden="true">{initials}</div>
+          <h3 class="profile-card__name">{name}</h3>
+          <p class="profile-card__role">{role}</p>
+          <p class="profile-card__bio">{bio}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="team__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C480,0 960,80 1440,20 L1440,80 L0,80 Z" fill="#F5FAFA"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .team {
+    position: relative;
+    background: var(--clr-surface-dark);
+    padding-block: 6rem 9rem;
+    overflow: hidden;
+  }
+
+  .team__ghost {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .team__ghost img {
+    width: min(80vw, 700px);
+    height: auto;
+    filter: invert(1) brightness(1.5);
+    mix-blend-mode: screen;
+    opacity: 0.12;
+  }
+
+  .team__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .team__header {
+    text-align: center;
+    margin-block-end: 4rem;
+  }
+
+  .team__label {
+    display: block;
+    margin-block-end: 0.75rem;
+  }
+
+  .section-title--light em {
+    font-style: italic;
+    color: var(--clr-primary);
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .profile-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(75,191,181,0.2);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: background var(--transition);
+  }
+
+  .profile-card:hover {
+    background: rgba(75,191,181,0.08);
+  }
+
+  .profile-card__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--clr-primary);
+    color: var(--clr-white);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline: auto;
+    margin-block-end: 1.25rem;
+    letter-spacing: 0.02em;
+  }
+
+  .profile-card__name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--clr-white);
+    margin-block-end: 0.35rem;
+  }
+
+  .profile-card__role {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--clr-primary);
+    text-transform: uppercase;
+    margin-block-end: 1.25rem;
+  }
+
+  .profile-card__bio {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+  }
+
+  .team__wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    line-height: 0;
+  }
+
+  .team__wave svg {
+    width: 100%;
+    height: 80px;
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+const address = {
+  street: 'Avenida del Olivar, 12',
+  city: '41940 Sevilla',
+  extra: 'Local bajo · Acceso sin escalones',
+  mapsQuery: 'Avenida+del+Olivar+12+Sevilla+41940',
+};
+---
+
+<section class="location" id="ubicacion">
+  <div class="location__inner container">
+    <header class="location__header">
+      <span class="section-label">Dónde estamos</span>
+      <h2 class="section-title">Ven a vernos</h2>
+      <p class="location__intro">Nuestra sede está en Tomares, a un paso de Sevilla. Te esperamos cuando quieras.</p>
+    </header>
+
+    <div class="location__body">
+      <div class="location__info">
+        <div class="location__address">
+          <svg class="location__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+            <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+          </svg>
+          <div>
+            <strong>{address.street}</strong><br />
+            {address.city}<br />
+            <span class="location__extra">{address.extra}</span>
+          </div>
+        </div>
+
+        <p class="location__note">
+          ¿Tienes dudas para llegar? Escríbenos y te ayudamos. También realizamos sesiones online para quienes no pueden acercarse presencialmente.
+        </p>
+
+        <a
+          href={`https://maps.google.com/?q=${address.mapsQuery}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+        >
+          Ver en Google Maps
+        </a>
+      </div>
+
+      <div class="location__map">
+        <iframe
+          title="Ubicación de MovEmSa en Google Maps"
+          src={`https://maps.google.com/maps?q=${address.mapsQuery}&output=embed&z=15`}
+          width="100%"
+          height="100%"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          style="border:0;"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="location__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,20 C360,70 1080,10 1440,55 L1440,80 L0,80 Z" fill="#E8F6F4"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .location {
+    position: relative;
+    background: var(--clr-bg);
+    padding-block: 6rem 9rem;
+    overflow: hidden;
+  }
+
+  .location__header {
+    text-align: center;
+    max-width: 520px;
+    margin-inline: auto;
+    margin-block-end: 3.5rem;
+  }
+
+  .location__header .section-label {
+    display: block;
+    margin-block-end: 0.75rem;
+  }
+
+  .location__intro {
+    margin-block-start: 1rem;
+    color: var(--clr-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .location__body {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .location__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .location__address {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    font-size: 1rem;
+    color: var(--clr-text);
+    line-height: 1.7;
+  }
+
+  .location__address strong {
+    font-weight: 600;
+  }
+
+  .location__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-block-start: 0.2rem;
+    color: var(--clr-primary-dark);
+  }
+
+  .location__extra {
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+  }
+
+  .location__note {
+    font-size: 0.95rem;
+    color: var(--clr-text-muted);
+    line-height: 1.75;
+  }
+
+  .location__map {
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 380px;
+    box-shadow: 0 8px 32px rgba(22,51,48,0.1);
+    border: 1px solid rgba(75,191,181,0.2);
+  }
+
+  .location__map iframe {
+    display: block;
+  }
+
+  .location__wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    line-height: 0;
+  }
+
+  .location__wave svg {
+    width: 100%;
+    height: 80px;
+  }
+
+  @media (max-width: 768px) {
+    .location__body {
+      grid-template-columns: 1fr;
+    }
+
+    .location__map {
+      height: 280px;
+    }
+  }
+</style>
