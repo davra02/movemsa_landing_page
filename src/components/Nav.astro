@@ -1,11 +1,11 @@
 ---
-import logoSrc from '../assets/movemsa.jpg';
+import logoSrc from '../assets/header_logo.png';
 ---
 
 <header class="nav" id="nav">
   <div class="nav__inner container">
     <a href="#inicio" class="nav__logo" aria-label="MovEmSa inicio">
-      <img src={logoSrc.src} alt="MovEmSa logo" width="48" height="48" />
+      <img src={logoSrc.src} alt="MovEmSa logo" />
     </a>
 
     <nav class="nav__links" id="nav-links" role="navigation" aria-label="Menú principal">
@@ -60,7 +60,7 @@ import logoSrc from '../assets/movemsa.jpg';
     inset-inline: 0;
     z-index: 100;
     transition: background 300ms ease, box-shadow 300ms ease;
-    padding-block: 0.75rem;
+    padding-block: 0.25rem;
   }
 
   .nav--scrolled {
@@ -75,11 +75,10 @@ import logoSrc from '../assets/movemsa.jpg';
   }
 
   .nav__logo img {
-    width: 48px;
-    height: 48px;
+    width: 300px;
+    height: auto;
     object-fit: contain;
-    filter: invert(1) brightness(1.8) contrast(1.2);
-    mix-blend-mode: screen;
+    filter: invert(1) brightness(1.1);
     transition: opacity var(--transition);
   }
 
