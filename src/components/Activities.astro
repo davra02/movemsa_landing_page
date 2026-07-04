@@ -1,47 +1,111 @@
 ---
 const activities = [
   {
-    icon: '🧘',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="24" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M14 32 Q17 22 24 21 Q31 22 34 32" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M10 34 Q17 29 24 29 Q31 29 38 34" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M14 30 Q10 33 9 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M34 30 Q38 33 39 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>`,
     title: 'Yoga',
     desc: 'Diferentes estilos — hatha, yin, vinyasa — para todos los niveles y momentos vitales.',
   },
   {
-    icon: '💃',
-    title: 'Danzaterapia',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="26" cy="9" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M26 13 L22 24 L16 30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22 24 L28 28 L32 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16 30 Q13 34 15 38 Q19 42 24 38 Q28 34 26 30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M22 18 L16 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>`,
+    title: 'Baile para desconectar',
     desc: 'La danza como herramienta de expresión emocional y liberación. El cuerpo que cuenta lo que las palabras no pueden.',
   },
   {
-    icon: '🩰',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="30" cy="9" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M30 13 L26 22 L18 26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M26 22 L24 32" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M18 26 L12 22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 32 L18 40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 32 L32 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>`,
     title: 'Danza Contemporánea',
     desc: 'Técnica y creatividad al servicio del movimiento. Sin barreras, sin límites de edad.',
   },
   {
-    icon: '🏋️',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="8" y1="24" x2="40" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <rect x="4" y="20" width="7" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="37" y="20" width="7" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="11" y="18" width="5" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="32" y="18" width="5" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+    </svg>`,
     title: 'Entrenamiento Funcional',
     desc: 'Fuerza y movilidad para la vida real. Ejercicios que te preparan para moverte mejor cada día.',
   },
   {
-    icon: '🌿',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="24" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M24 14 L24 30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 20 L16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 20 L32 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 30 L18 40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 30 L30 40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M20 8 Q18 4 20 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      <path d="M28 8 Q30 4 28 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      <path d="M24 6 Q24 2 24 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+    </svg>`,
     title: 'Movimientos Conscientes',
     desc: 'Técnicas que unen respiración, atención plena y movimiento para calmar el sistema nervioso.',
   },
   {
-    icon: '🩺',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="6" y1="22" x2="42" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="6" y1="18" x2="6" y2="40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="42" y1="18" x2="42" y2="40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="24" cy="13" r="3.5" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M24 17 L22 22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M22 22 L18 28 L14 26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22 22 L24 30 L22 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
     title: 'Barrefit',
     desc: 'Lo mejor de la barra de ballet, el pilates y el fitness en una clase fluida y de bajo impacto.',
   },
   {
-    icon: '🤸',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="24" cy="28" rx="14" ry="6" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="14" cy="20" r="3.5" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M14 24 L14 28" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M8 26 L14 24 L20 22 L28 22 L36 26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
     title: 'Pilates',
     desc: 'Control, respiración y conciencia corporal. Ideal para la rehabilitación y el fortalecimiento profundo.',
   },
   {
-    icon: '👥',
-    title: 'Entreno Personal y en Pareja',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="17" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="31" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M17 14 L15 24 L11 34" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M15 24 L19 30 L17 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M15 18 L22 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M31 16 L29 26 L25 36" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M29 26 L33 32 L31 40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M29 20 L22 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>`,
+    title: 'Entrenamiento Personal y en Pareja',
     desc: 'Sesiones adaptadas a tus objetivos, sola o acompañada. Progreso real, personalizado.',
   },
   {
-    icon: '🤰',
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="24" cy="9" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M24 13 C24 13 20 16 18 22 C16 28 17 34 17 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M24 13 C24 13 26 16 29 20 C32 24 32 30 31 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M18 22 C20 26 28 26 29 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M16 20 L12 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M30 18 L34 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>`,
     title: 'Embarazo y Postparto',
     desc: 'Programas específicos para cada etapa de la maternidad. Cuidado, respeto y acompañamiento.',
   },
@@ -61,14 +125,14 @@ const activities = [
     <div class="activities__grid">
       {activities.map(({ icon, title, desc }) => (
         <article class="activity-card reveal">
-          <span class="activity-card__icon" aria-hidden="true">{icon}</span>
+          <span class="activity-card__icon" set:html={icon} />
           <h3 class="activity-card__title">{title}</h3>
           <p class="activity-card__desc">{desc}</p>
         </article>
       ))}
 
       <article class="activity-card activity-card--more reveal">
-        <span class="activity-card__icon" aria-hidden="true">✨</span>
+        <span class="activity-card__icon" set:html={`<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M24 10 L24 38 M10 24 L38 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 3"/></svg>`} />
         <h3 class="activity-card__title">Y mucho más por venir</h3>
         <p class="activity-card__desc">
           El proyecto sigue creciendo. Nuevas actividades, talleres y propuestas especiales en camino.
@@ -91,7 +155,6 @@ const activities = [
     (entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          // stagger delay based on position in viewport batch
           const delay = (i % 4) * 80;
           setTimeout(() => entry.target.classList.add('visible'), delay);
           io.unobserve(entry.target);
@@ -147,13 +210,13 @@ const activities = [
     padding: 1.75rem 1.5rem;
     border: 1px solid rgba(75,191,181,0.12);
     transition: box-shadow var(--transition), transform var(--transition),
-                opacity 0.55s ease, /* for .reveal */
+                opacity 0.55s ease,
                 transform 0.55s ease;
   }
 
   .activity-card:hover {
     box-shadow: 0 6px 24px rgba(75,191,181,0.14);
-    transform: translateY(-3px) !important; /* override reveal transform */
+    transform: translateY(-3px) !important;
   }
 
   .activity-card--more {
@@ -169,10 +232,16 @@ const activities = [
   }
 
   .activity-card__icon {
-    font-size: 2rem;
     display: block;
-    margin-block-end: 0.75rem;
-    line-height: 1;
+    width: 48px;
+    height: 48px;
+    margin-block-end: 1rem;
+    color: var(--clr-primary-dark);
+  }
+
+  .activity-card__icon svg {
+    width: 100%;
+    height: 100%;
   }
 
   .activity-card__title {

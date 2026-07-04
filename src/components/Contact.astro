@@ -13,10 +13,22 @@ const contactInfo = [
     href: 'tel:+34614056383',
   },
   {
+    icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a11.97 11.97 0 005.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.48-8.45z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
+    label: 'WhatsApp',
+    value: '+34 614 056 383',
+    href: 'https://wa.me/34614056383',
+  },
+  {
     icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
     label: 'Instagram',
     value: '@movimiento_emocion_salud',
     href: 'https://instagram.com/movimiento_emocion_salud',
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.14a8.16 8.16 0 004.77 1.52V7.21a4.85 4.85 0 01-1-.52z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
+    label: 'TikTok',
+    value: '@movemsa',
+    href: 'https://www.tiktok.com/@movemsa',
   },
 ];
 ---
@@ -46,7 +58,8 @@ const contactInfo = [
       </div>
 
       <!-- Form -->
-      <form class="contact-form" action="#" method="post" novalidate>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/xbdvqbyv" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde MovEmSa" />
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
@@ -59,7 +72,13 @@ const contactInfo = [
           <label for="mensaje">Mensaje</label>
           <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
         </div>
-        <button type="submit" class="btn-primary contact-form__submit">Enviar mensaje</button>
+        <button type="submit" class="btn-primary contact-form__submit" id="form-submit">Enviar mensaje</button>
+        <p class="form-success" id="form-success" aria-live="polite">
+          ✓ Mensaje enviado. ¡Nos ponemos en contacto contigo pronto!
+        </p>
+        <p class="form-error" id="form-error" aria-live="polite">
+          Algo ha fallado. Inténtalo de nuevo o escríbenos directamente al email.
+        </p>
       </form>
     </div>
   </div>
@@ -209,9 +228,76 @@ const contactInfo = [
     margin-block-start: 0.5rem;
   }
 
+  .contact-form__submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-success,
+  .form-error {
+    display: none;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-block-start: 0.25rem;
+  }
+
+  .form-success {
+    background: rgba(75,191,181,0.12);
+    color: var(--clr-primary-dark);
+    border: 1px solid rgba(75,191,181,0.3);
+  }
+
+  .form-error {
+    background: rgba(220,80,80,0.08);
+    color: #c0392b;
+    border: 1px solid rgba(220,80,80,0.2);
+  }
+
+  .form-success.visible,
+  .form-error.visible {
+    display: block;
+  }
+
   @media (max-width: 768px) {
     .contact__body {
       grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const btn = document.getElementById('form-submit') as HTMLButtonElement;
+  const success = document.getElementById('form-success')!;
+  const error = document.getElementById('form-error')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    success.classList.remove('visible');
+    error.classList.remove('visible');
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        success.classList.add('visible');
+        form.reset();
+      } else {
+        error.classList.add('visible');
+      }
+    } catch {
+      error.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Enviar mensaje';
+    }
+  });
+</script>
