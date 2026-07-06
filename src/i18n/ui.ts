@@ -2,7 +2,7 @@ const translations = {
   es: {
     // Layout
     pageTitle: 'MovEmSa — Movimiento, Emoción, Salud',
-    pageDesc: 'Clases de ejercicio y rehabilitación enfocadas en la mujer. Movimiento consciente, bienestar emocional y salud física de la mano.',
+    pageDesc: 'Clases de ejercicio y rehabilitación en Tomares, Sevilla. Movimiento consciente, bienestar emocional y salud física de la mano.',
 
     // Nav
     navWhy: 'Por qué',
@@ -109,7 +109,7 @@ const translations = {
   en: {
     // Layout
     pageTitle: 'MovEmSa — Movement, Emotion, Health',
-    pageDesc: 'Exercise and rehabilitation classes for women. Conscious movement, emotional wellbeing and physical health — all in one place.',
+    pageDesc: 'Exercise and rehabilitation classes in Tomares, Sevilla. Conscious movement, emotional wellbeing and physical health — all in one place.',
 
     // Nav
     navWhy: 'Why',
