@@ -18,7 +18,7 @@ const translations = {
     heroLabel: 'Movimiento · Emoción · Salud',
     heroTitle1: 'Movimiento con propósito.',
     heroTitle2: 'Salud desde adentro.',
-    heroSub: 'Clases de ejercicio y rehabilitación desde la convicción de que el cuerpo y la mente son inseparables. Un espacio especialmente pensado para la mujer, abierto a quien quiera moverse con propósito.',
+    heroSub: 'Clases de ejercicio y rehabilitación desde la convicción de que el cuerpo y la mente son inseparables. Un espacio abierto a quien quiera moverse con propósito.',
     heroCta1: 'Descubre las actividades',
     heroCta2: 'Nuestra propuesta',
 
@@ -125,7 +125,7 @@ const translations = {
     heroLabel: 'Movement · Emotion · Health',
     heroTitle1: 'Movement with purpose.',
     heroTitle2: 'Health from within.',
-    heroSub: 'Exercise and rehabilitation classes rooted in the belief that body and mind are inseparable. A space especially designed for women, open to anyone who wants to move with intention.',
+    heroSub: 'Exercise and rehabilitation classes rooted in the belief that body and mind are inseparable. A space open to anyone who wants to move with intention.',
     heroCta1: 'Explore activities',
     heroCta2: 'Our approach',
 
