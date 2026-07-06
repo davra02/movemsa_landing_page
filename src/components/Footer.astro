@@ -1,5 +1,12 @@
 ---
 import logoSrc from '../assets/header_logo.png';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <footer class="footer">
@@ -9,17 +16,17 @@ import logoSrc from '../assets/header_logo.png';
         <img src={logoSrc.src} alt="MovEmSa" width="52" height="52" />
       </a>
       <p class="footer__tagline">
-        Movimiento, Emoción, Salud.<br />
-        <em>Porque moverse bien es sentirse bien.</em>
+        {t('footerTagline1')}<br />
+        <em>{t('footerTagline2')}</em>
       </p>
     </div>
 
     <nav class="footer__nav" aria-label="Navegación pie de página">
-      <a href="#por-que">Por qué</a>
-      <a href="#actividades">Actividades</a>
-      <a href="#nosotras">Nosotras</a>
-      <a href="#ubicacion">Ubicación</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#por-que">{t('footerNavWhy')}</a>
+      <a href="#actividades">{t('footerNavActivities')}</a>
+      <a href="#nosotras">{t('footerNavAbout')}</a>
+      <a href="#ubicacion">{t('footerNavLocation')}</a>
+      <a href="#contacto">{t('footerNavContact')}</a>
     </nav>
 
     <div class="footer__social">
@@ -27,7 +34,7 @@ import logoSrc from '../assets/header_logo.png';
         href="https://instagram.com/movimiento_emocion_salud"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Instagram de MovEmSa"
+        aria-label={t('footerIGLabel')}
         class="footer__social-link"
       >
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -40,7 +47,7 @@ import logoSrc from '../assets/header_logo.png';
         href="https://www.tiktok.com/@movemsa"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="TikTok de MovEmSa"
+        aria-label={t('footerTTLabel')}
         class="footer__social-link"
       >
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -51,7 +58,7 @@ import logoSrc from '../assets/header_logo.png';
   </div>
 
   <div class="footer__bottom container">
-    <p>&copy; {new Date().getFullYear()} MovEmSa · Movimiento, Emoción, Salud. Todos los derechos reservados.</p>
+    <p>&copy; {new Date().getFullYear()} {t('footerCopyright')}</p>
   </div>
 </footer>
 

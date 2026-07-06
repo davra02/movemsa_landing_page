@@ -1,5 +1,12 @@
 ---
 import logoSrc from '../assets/header_logo.png';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <header class="nav" id="nav">
@@ -8,14 +15,15 @@ import logoSrc from '../assets/header_logo.png';
       <img src={logoSrc.src} alt="MovEmSa logo" />
     </a>
 
-    <nav class="nav__links" id="nav-links" role="navigation" aria-label="Menú principal">
-      <a href="#por-que">Por qué</a>
-      <a href="#actividades">Actividades</a>
-      <a href="#nosotras">Nosotras</a>
-      <a href="#contacto">Contacto</a>
+    <nav class="nav__links" id="nav-links" role="navigation" aria-label={t('navAriaMenu')}>
+      <a href="#por-que">{t('navWhy')}</a>
+      <a href="#actividades">{t('navActivities')}</a>
+      <a href="#nosotras">{t('navAbout')}</a>
+      <a href="#contacto">{t('navContact')}</a>
+      <a href={t('navSwitchHref')} class="nav__lang-switch">{t('navSwitchLang')}</a>
     </nav>
 
-    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+    <button class="nav__hamburger" id="hamburger" aria-label={t('navAriaHamburger')} aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
@@ -28,7 +36,6 @@ import logoSrc from '../assets/header_logo.png';
   const hamburger = document.getElementById('hamburger')!;
   const links = document.getElementById('nav-links')!;
 
-  // Scroll-aware background
   const sentinel = document.getElementById('inicio') ?? document.body;
   const observer = new IntersectionObserver(
     ([entry]) => nav.classList.toggle('nav--scrolled', !entry.isIntersecting),
@@ -36,14 +43,12 @@ import logoSrc from '../assets/header_logo.png';
   );
   observer.observe(sentinel);
 
-  // Mobile toggle
   hamburger.addEventListener('click', () => {
     const open = links.classList.toggle('nav__links--open');
     hamburger.setAttribute('aria-expanded', String(open));
     hamburger.classList.toggle('nav__hamburger--open', open);
   });
 
-  // Close on link click
   links.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => {
       links.classList.remove('nav__links--open');
@@ -106,6 +111,23 @@ import logoSrc from '../assets/header_logo.png';
     color: var(--clr-primary);
   }
 
+  .nav__lang-switch {
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(75,191,181,0.45);
+    border-radius: 4px;
+    color: var(--clr-primary) !important;
+    transition: border-color var(--transition), background var(--transition), color var(--transition) !important;
+  }
+
+  .nav__lang-switch:hover {
+    background: rgba(75,191,181,0.12);
+    border-color: var(--clr-primary);
+    color: var(--clr-primary) !important;
+  }
+
   .nav__hamburger {
     display: none;
     flex-direction: column;
@@ -135,7 +157,6 @@ import logoSrc from '../assets/header_logo.png';
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* Mobile */
   @media (max-width: 768px) {
     .nav__hamburger {
       display: flex;
@@ -165,6 +186,12 @@ import logoSrc from '../assets/header_logo.png';
       padding: 0.75rem 2rem;
       width: 100%;
       font-size: 1rem;
+    }
+
+    .nav__lang-switch {
+      margin-block-start: 0.5rem;
+      align-self: flex-start;
+      margin-inline-start: 2rem;
     }
   }
 </style>

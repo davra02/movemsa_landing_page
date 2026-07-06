@@ -1,19 +1,16 @@
 ---
 import logoSrc from '../assets/header_logo.png';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 
 const team = [
-  {
-    initials: 'LM',
-    name: 'Lucía Molero',
-    role: 'Co-fundadora · Graduada en CCAFD · Máster en Salud y Patologías',
-    bio: 'Graduada en Ciencias de la Actividad Física y el Deporte con Máster en Salud y Patologías, Lucía combina la ciencia del movimiento con una formación artística profunda: estudios de Conservatorio, paso por el Centro Andaluz de Alto Rendimiento en danza contemporánea y especialización en pilates y bailes latinos. También formada en entrenamiento adaptado para personas mayores — porque el movimiento no tiene edad.',
-  },
-  {
-    initials: 'ZA',
-    name: 'Zaida Alés',
-    role: 'Co-fundadora · Graduada en CCAFD · Máster en Salud y Patologías',
-    bio: 'Graduada en Ciencias de la Actividad Física y el Deporte con Máster en Salud y Patologías, Zaida aporta una perspectiva única al movimiento: cinturón negro en kárate y formación en yoga. Una trayectoria que le enseñó disciplina, escucha corporal y respeto al proceso — la misma filosofía que aplica en cada sesión de MovEmSa.',
-  },
+  { initials: 'LM', name: 'Lucía Molero', role: t('luciaRole'), bio: t('luciaBio') },
+  { initials: 'ZA', name: 'Zaida Alés',   role: t('zaidaRole'), bio: t('zaidaBio') },
 ];
 ---
 
@@ -25,8 +22,8 @@ const team = [
 
   <div class="team__inner container">
     <header class="team__header">
-      <span class="section-label team__label">Sobre nosotras</span>
-      <h2 class="section-title section-title--light">Las personas detrás<br /><em>del movimiento.</em></h2>
+      <span class="section-label team__label">{t('teamLabel')}</span>
+      <h2 class="section-title section-title--light">{t('teamTitle1')}<br /><em>{t('teamTitle2')}</em></h2>
     </header>
 
     <div class="team__grid">

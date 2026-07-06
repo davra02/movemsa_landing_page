@@ -1,5 +1,12 @@
 ---
 import logoSrc from '../assets/movemsa.jpg';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="hero" id="inicio">
@@ -9,20 +16,18 @@ import logoSrc from '../assets/movemsa.jpg';
   </div>
 
   <div class="hero__content container">
-    <span class="section-label hero__label">Movimiento · Emoción · Salud</span>
+    <span class="section-label hero__label">{t('heroLabel')}</span>
 
     <h1 class="hero__title">
-      Movimiento con propósito.<br />
-      <em>Salud desde adentro.</em>
+      {t('heroTitle1')}<br />
+      <em>{t('heroTitle2')}</em>
     </h1>
 
-    <p class="hero__sub">
-      Clases de ejercicio y rehabilitación para la mujer, desde la convicción de que el cuerpo y la mente son inseparables. Porque moverse bien es sentirse bien.
-    </p>
+    <p class="hero__sub">{t('heroSub')}</p>
 
     <div class="hero__actions">
-      <a href="#actividades" class="btn-primary">Descubre las actividades</a>
-      <a href="#por-que" class="btn-outline">Nuestra propuesta</a>
+      <a href="#actividades" class="btn-primary">{t('heroCta1')}</a>
+      <a href="#por-que" class="btn-outline">{t('heroCta2')}</a>
     </div>
   </div>
 

@@ -1,96 +1,22 @@
 ---
 import '../styles/global.css';
+import { useTranslations, type Lang } from '../i18n/ui';
 
-const SITE = 'https://movemsa.es';
-const title = 'MovEmSa · Clases de Yoga, Pilates y Danza en Tomares, Sevilla';
-const description = 'Clases de yoga, pilates, danzaterapia y barrefit para mujeres en Tomares, Sevilla. Grupos reducidos y sesiones personales con graduadas en CCAFD y Máster en Salud.';
-const ogImage = `${SITE}/og-image.jpg`;
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Favicons -->
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-
-    <!-- SEO primario -->
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={SITE + '/'} />
-    <meta name="robots" content="index, follow" />
-
-    <!-- Open Graph (WhatsApp, Facebook, LinkedIn…) -->
-    <meta property="og:type"        content="website" />
-    <meta property="og:url"         content={SITE + '/'} />
-    <meta property="og:site_name"   content="MovEmSa" />
-    <meta property="og:locale"      content="es_ES" />
-    <meta property="og:title"       content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image"       content={ogImage} />
-    <meta property="og:image:alt"   content="Logo de MovEmSa, estudio de bienestar femenino en Tomares, Sevilla" />
-
-    <!-- Twitter / X -->
-    <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image"       content={ogImage} />
-
-    <!-- Datos estructurados — LocalBusiness -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": ["LocalBusiness", "SportsActivityLocation"],
-        "name": "MovEmSa",
-        "alternateName": "Movimiento, Emoción, Salud",
-        "description": "Estudio de bienestar femenino en Tomares (Sevilla). Clases de yoga, pilates, danzaterapia, barrefit, danza contemporánea y entrenamientos para embarazadas y postparto. Grupos reducidos y sesiones personales con profesionales graduadas en Ciencias de la Actividad Física y el Deporte.",
-        "url": "https://movemsa.es",
-        "logo": "https://movemsa.es/og-image.jpg",
-        "image": "https://movemsa.es/og-image.jpg",
-        "telephone": "+34614056383",
-        "email": "info@movemsa.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Avenida del Olivar, 12",
-          "addressLocality": "Tomares",
-          "addressRegion": "Sevilla",
-          "postalCode": "41940",
-          "addressCountry": "ES"
-        },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "21:00"
-          }
-        ],
-        "sameAs": [
-          "https://www.instagram.com/movimiento_emocion_salud",
-          "https://www.tiktok.com/@movemsa"
-        ],
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Actividades de MovEmSa",
-          "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Yoga" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pilates" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Danzaterapia" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Danza Contemporánea" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Barrefit" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entrenamiento Funcional" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Movimientos Conscientes" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entrenamiento Personal" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Clases para Embarazadas y Postparto" } }
-          ]
-        }
-      }
-    </script>
-
-    <!-- Fuentes -->
+    <meta name="generator" content={Astro.generator} />
+    <title>{t('pageTitle')}</title>
+    <meta name="description" content={t('pageDesc')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

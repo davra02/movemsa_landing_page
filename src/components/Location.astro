@@ -1,4 +1,12 @@
 ---
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
 const address = {
   street: 'Avenida del Olivar, 12',
   city: 'Tomares, 41940 Sevilla',
@@ -10,9 +18,9 @@ const address = {
 <section class="location" id="ubicacion">
   <div class="location__inner container">
     <header class="location__header">
-      <span class="section-label">Dónde estamos</span>
-      <h2 class="section-title">Estamos en Tomares, Sevilla</h2>
-      <p class="location__intro">Nuestra sede está en Tomares, a un paso de Sevilla. Te esperamos cuando quieras.</p>
+      <span class="section-label">{t('locationLabel')}</span>
+      <h2 class="section-title">{t('locationTitle')}</h2>
+      <p class="location__intro">{t('locationIntro')}</p>
     </header>
 
     <div class="location__body">
@@ -29,9 +37,7 @@ const address = {
           </div>
         </div>
 
-        <p class="location__note">
-          ¿Tienes dudas para llegar? Escríbenos y te ayudamos. También realizamos sesiones online para quienes no pueden acercarse presencialmente.
-        </p>
+        <p class="location__note">{t('locationNote')}</p>
 
         <a
           href={`https://maps.google.com/?q=${address.mapsQuery}`}
@@ -39,13 +45,13 @@ const address = {
           rel="noopener noreferrer"
           class="btn-primary"
         >
-          Ver en Google Maps
+          {t('locationMapBtn')}
         </a>
       </div>
 
       <div class="location__map">
         <iframe
-          title="Ubicación de MovEmSa en Google Maps"
+          title={t('locationMapTitle')}
           src={`https://maps.google.com/maps?q=${address.mapsQuery}&output=embed&z=15`}
           width="100%"
           height="100%"
