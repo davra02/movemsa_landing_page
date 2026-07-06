@@ -1,5 +1,5 @@
 ---
-import logoSrc from '../assets/header_logo.png';
+import logoSrc from '../assets/header_logo.jpg';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -88,6 +88,7 @@ const t = useTranslations(lang);
     height: 52px;
     object-fit: contain;
     filter: invert(1) brightness(1.1);
+    mix-blend-mode: screen;
   }
 
   .footer__tagline {

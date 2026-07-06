@@ -1,5 +1,5 @@
 ---
-import logoSrc from '../assets/header_logo.png';
+import logoSrc from '../assets/header_logo.jpg';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -64,12 +64,12 @@ const t = useTranslations(lang);
     inset-block-start: 0;
     inset-inline: 0;
     z-index: 100;
-    transition: background 300ms ease, box-shadow 300ms ease;
+    background: var(--clr-surface-dark);
+    transition: box-shadow 300ms ease;
     padding-block: 0.25rem;
   }
 
   .nav--scrolled {
-    background: var(--clr-surface-dark);
     box-shadow: 0 2px 20px rgba(0,0,0,0.25);
   }
 
@@ -84,6 +84,7 @@ const t = useTranslations(lang);
     height: auto;
     object-fit: contain;
     filter: invert(1) brightness(1.1);
+    mix-blend-mode: screen;
     transition: opacity var(--transition);
   }
 
