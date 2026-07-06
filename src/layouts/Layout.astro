@@ -1,16 +1,22 @@
 ---
 import '../styles/global.css';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>MovEmSa — Movimiento, Emoción, Salud</title>
-    <meta name="description" content="Clases de ejercicio y rehabilitación enfocadas en la mujer. Movimiento consciente, bienestar emocional y salud física de la mano." />
+    <title>{t('pageTitle')}</title>
+    <meta name="description" content={t('pageDesc')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

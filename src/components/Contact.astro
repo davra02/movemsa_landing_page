@@ -1,4 +1,12 @@
 ---
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
 const contactInfo = [
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
@@ -36,11 +44,9 @@ const contactInfo = [
 <section class="contact" id="contacto">
   <div class="contact__inner container">
     <header class="contact__header">
-      <span class="section-label">Contacto</span>
-      <h2 class="section-title">¿Hablamos?</h2>
-      <p class="contact__intro">
-        Si tienes preguntas sobre alguna actividad, quieres reservar una clase o simplemente quieres saber más sobre MovEmSa, escríbenos. Respondemos siempre.
-      </p>
+      <span class="section-label">{t('contactLabel')}</span>
+      <h2 class="section-title">{t('contactTitle')}</h2>
+      <p class="contact__intro">{t('contactIntro')}</p>
     </header>
 
     <div class="contact__body">
@@ -59,26 +65,28 @@ const contactInfo = [
 
       <!-- Form -->
       <form class="contact-form" id="contact-form" action="https://formspree.io/f/xqevjzjz" method="POST" novalidate>
-        <input type="hidden" name="_subject" value="Nuevo mensaje desde MovEmSa" />
+        <input type="hidden" name="_subject" value={t('formSubject')} />
         <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+          <label for="nombre">{t('formName')}</label>
+          <input type="text" id="nombre" name="nombre" placeholder={t('formNamePh')} required />
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+          <label for="email">{t('formEmail')}</label>
+          <input type="email" id="email" name="email" placeholder={t('formEmailPh')} required />
         </div>
         <div class="form-group">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
+          <label for="mensaje">{t('formMessage')}</label>
+          <textarea id="mensaje" name="mensaje" rows="5" placeholder={t('formMessagePh')} required></textarea>
         </div>
-        <button type="submit" class="btn-primary contact-form__submit" id="form-submit">Enviar mensaje</button>
-        <p class="form-success" id="form-success" aria-live="polite">
-          ✓ Mensaje enviado. ¡Nos ponemos en contacto contigo pronto!
-        </p>
-        <p class="form-error" id="form-error" aria-live="polite">
-          Algo ha fallado. Inténtalo de nuevo o escríbenos directamente al email.
-        </p>
+        <button
+          type="submit"
+          class="btn-primary contact-form__submit"
+          id="form-submit"
+          data-label={t('formSubmit')}
+          data-sending={t('formSending')}
+        >{t('formSubmit')}</button>
+        <p class="form-success" id="form-success" aria-live="polite">{t('formSuccess')}</p>
+        <p class="form-error" id="form-error" aria-live="polite">{t('formError')}</p>
       </form>
     </div>
   </div>
@@ -276,7 +284,7 @@ const contactInfo = [
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     btn.disabled = true;
-    btn.textContent = 'Enviando...';
+    btn.textContent = btn.dataset.sending ?? btn.textContent;
     success.classList.remove('visible');
     error.classList.remove('visible');
 
@@ -297,7 +305,7 @@ const contactInfo = [
       error.classList.add('visible');
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Enviar mensaje';
+      btn.textContent = btn.dataset.label ?? btn.textContent;
     }
   });
 </script>
