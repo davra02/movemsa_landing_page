@@ -31,12 +31,12 @@ const translations = {
     pillar1Body: 'Cada actividad está pensada para que te conectes con tu cuerpo de verdad — no solo para quemar calorías, sino para escucharte, moverte con intención y disfrutar el proceso.',
     pillar2Title: 'Bienestar Emocional',
     pillar2Body: 'El estrés, la ansiedad y el agotamiento mental son parte del día a día de muchas personas. Nuestras clases son un espacio donde desconectar de verdad y recargar desde adentro.',
-    pillar3Title: 'Enfocado en la Mujer',
-    pillar3Body: 'Desde embarazadas y postparto hasta quien busca su primer espacio propio de movimiento. Todos nuestros programas están diseñados con las necesidades y los ciclos de la mujer en mente.',
+    pillar3Title: 'Adaptado a cada persona',
+    pillar3Body: 'Cada cuerpo tiene su historia, su ritmo y sus necesidades. Nuestros programas se diseñan para acompañarte donde estés — sin importar el punto de partida.',
 
     // Activities
     activitiesLabel: 'Nuestras actividades',
-    activitiesTitle1: 'Un espacio para cada mujer,',
+    activitiesTitle1: 'Un espacio para cada uno,',
     activitiesTitle2: 'un movimiento para cada momento.',
     activitiesIntro: 'Ofrecemos una amplia variedad de disciplinas diseñadas para adaptarse a ti — tu cuerpo, tu ritmo, tu momento vital.',
     act1Title: 'Yoga',
@@ -138,12 +138,12 @@ const translations = {
     pillar1Body: 'Every activity is designed to help you connect with your body — not just to burn calories, but to listen, move with intention, and enjoy the process.',
     pillar2Title: 'Emotional Wellbeing',
     pillar2Body: 'Stress, anxiety, and mental exhaustion are part of daily life for many. Our classes are a space to truly disconnect and recharge from within.',
-    pillar3Title: 'Women-Centred',
-    pillar3Body: "From pregnancy and postpartum to anyone seeking their first movement space. All our programs are designed with women's needs and cycles in mind.",
+    pillar3Title: 'Adapted to Each Person',
+    pillar3Body: 'Every body has its own story, pace, and needs. Our programs are designed to meet you where you are — no matter your starting point.',
 
     // Activities
     activitiesLabel: 'Our activities',
-    activitiesTitle1: 'A space for every woman,',
+    activitiesTitle1: 'A space for everyone,',
     activitiesTitle2: 'a movement for every moment.',
     activitiesIntro: 'We offer a wide variety of disciplines designed to adapt to you — your body, your pace, your moment in life.',
     act1Title: 'Yoga',
