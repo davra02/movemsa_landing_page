@@ -1,4 +1,5 @@
 ---
+import horarioSrc from '../assets/horario.jpeg';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -61,6 +62,10 @@ const address = {
           allowfullscreen
         ></iframe>
       </div>
+    </div>
+
+    <div class="location__schedule-section">
+      <img src={horarioSrc.src} alt="Horario" class="location__schedule" />
     </div>
   </div>
 
@@ -141,6 +146,22 @@ const address = {
     font-size: 0.95rem;
     color: var(--clr-text-muted);
     line-height: 1.75;
+  }
+
+  .location__schedule-section {
+    margin-block-start: 3rem;
+    padding-block-start: 3rem;
+    border-top: 1px solid rgba(75,191,181,0.2);
+    display: flex;
+    justify-content: center;
+  }
+
+  .location__schedule {
+    max-width: 1200px;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(22,51,48,0.08);
+    border: 1px solid rgba(75,191,181,0.2);
   }
 
   .location__map {
