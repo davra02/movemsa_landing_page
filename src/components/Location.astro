@@ -65,7 +65,16 @@ const address = {
     </div>
 
     <div class="location__schedule-section">
-      <img src={horarioSrc.src} alt="Horario" class="location__schedule" />
+      <a href={horarioSrc.src} target="_blank" rel="noopener" class="location__schedule-link">
+        <img
+          src={horarioSrc.src}
+          width={horarioSrc.width}
+          height={horarioSrc.height}
+          alt="Horario"
+          loading="lazy"
+          class="location__schedule"
+        />
+      </a>
     </div>
   </div>
 
@@ -156,8 +165,14 @@ const address = {
     justify-content: center;
   }
 
-  .location__schedule {
+  .location__schedule-link {
+    display: block;
+    width: 100%;
     max-width: 1200px;
+  }
+
+  .location__schedule {
+    width: 100%;
     height: auto;
     border-radius: var(--radius);
     box-shadow: 0 4px 16px rgba(22,51,48,0.08);
