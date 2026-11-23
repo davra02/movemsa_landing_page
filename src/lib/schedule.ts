@@ -157,13 +157,18 @@ export function renderSchedule(rows: ScheduleRow[], lang: Lang): string {
   }
   table += `</div>`;
 
-  // Lista por día (móvil)
-  let list = `<div class="tt-list">`;
+  // Móvil: pestañas por día y solo se muestra el día elegido
+  const empty = lang === 'es' ? 'No hay clases este día.' : 'No classes on this day.';
+  let list = `<div class="tt-list"><div class="tt-tabs" role="tablist">${dayIdx
+    .map((d) => `<button type="button" class="tt-tab" role="tab" data-day="${d}" aria-selected="${d === 0}">${days[d].slice(0, 3)}</button>`)
+    .join('')}</div>`;
   for (const d of dayIdx) {
     const items = rows.filter((r) => r.day === d).sort((a, b) => a.minutes - b.minutes);
-    if (!items.length) continue;
-    list += `<div class="tt-list-day"><h3>${days[d]}</h3><ul>${items
-      .map((r) => `<li><span class="tt-time">${r.time}</span>${pill(r)}</li>`).join('')}</ul></div>`;
+    list += `<div class="tt-list-day${d === 0 ? ' is-active' : ''}" role="tabpanel" data-day="${d}"><h3>${days[d]}</h3>${
+      items.length
+        ? `<ul>${items.map((r) => `<li><span class="tt-time">${r.time}</span>${pill(r)}</li>`).join('')}</ul>`
+        : `<p class="tt-empty">${empty}</p>`
+    }</div>`;
   }
   list += `</div>`;
 

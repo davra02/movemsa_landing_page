@@ -22,7 +22,30 @@ const rows = parseSchedule(defaultCsv);
       <p class="schedule__intro">{t('scheduleIntro')}</p>
     </header>
 
-    <div class="timetable" id="timetable" set:html={renderSchedule(rows, lang)} />
+    <button type="button" class="schedule__expand" id="tt-expand">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {t('scheduleExpand')}
+    </button>
+
+    <div class="timetable timetable--page" id="timetable" set:html={renderSchedule(rows, lang)} />
+
+    <div class="tt-overlay" id="tt-overlay" role="dialog" aria-modal="true" aria-label={t('scheduleLabel')} hidden>
+      <div class="tt-overlay__inner">
+        <div class="tt-overlay__bar">
+          <span class="tt-overlay__title">{t('scheduleLabel')}</span>
+          <div class="tt-overlay__actions">
+            <button type="button" class="tt-overlay__btn" data-zoom="-1" aria-label={t('scheduleZoomOut')}>−</button>
+            <button type="button" class="tt-overlay__btn" data-zoom="1" aria-label={t('scheduleZoomIn')}>+</button>
+            <button type="button" class="tt-overlay__btn tt-overlay__close" id="tt-close" aria-label={t('scheduleClose')}>✕</button>
+          </div>
+        </div>
+        <div class="tt-overlay__scroll">
+          <div class="timetable timetable--full" id="tt-full"></div>
+        </div>
+      </div>
+    </div>
 
     <div class="dance">
       <a href={bailesSrc.src} target="_blank" rel="noopener" class="dance__poster">
@@ -68,18 +91,86 @@ const rows = parseSchedule(defaultCsv);
 <script>
   import { SHEET_ID, sheetCsvUrl, parseSchedule, renderSchedule, classTimes, type Lang } from '../lib/schedule';
 
+  const section = document.getElementById('horario')!;
+  const target = document.getElementById('timetable')!;
+  const lang = (section.dataset.lang ?? 'es') as Lang;
+
+  /* ---------- Selector de día (móvil) ---------- */
+  // Lunes = 0 … domingo = 6; si hoy no tiene pestaña (fin de semana sin clases), lunes.
+  let selectedDay = (new Date().getDay() + 6) % 7;
+
+  function selectDay(day: number) {
+    const tabs = target.querySelectorAll<HTMLElement>('.tt-tab');
+    if (![...tabs].some((t) => Number(t.dataset.day) === day)) day = 0;
+    selectedDay = day;
+    tabs.forEach((t) => t.setAttribute('aria-selected', String(Number(t.dataset.day) === day)));
+    target.querySelectorAll<HTMLElement>('.tt-list-day').forEach((p) =>
+      p.classList.toggle('is-active', Number(p.dataset.day) === day));
+  }
+
+  target.addEventListener('click', (e) => {
+    const tab = (e.target as HTMLElement).closest<HTMLElement>('.tt-tab');
+    if (tab) selectDay(Number(tab.dataset.day));
+  });
+  selectDay(selectedDay);
+
+  /* ---------- Pantalla completa en horizontal ---------- */
+  const overlay = document.getElementById('tt-overlay')!;
+  const full = document.getElementById('tt-full')!;
+  const portrait = window.matchMedia('(orientation: portrait)');
+  const ZOOMS = [1, 1.35, 1.75, 2.25];
+  let zoom = 0;
+
+  const setZoom = (z: number) => {
+    zoom = Math.max(0, Math.min(ZOOMS.length - 1, z));
+    full.style.setProperty('--tt-zoom', String(ZOOMS[zoom]));
+  };
+  // Si el móvil está en vertical y no se pudo bloquear la orientación, se gira la tabla con CSS.
+  const updateRotation = () => overlay.classList.toggle('is-rotated', portrait.matches);
+
+  async function openFull() {
+    const table = target.querySelector('.tt-table');
+    if (!table) return;
+    full.innerHTML = table.outerHTML;
+    setZoom(0);
+    overlay.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    updateRotation();
+    try {
+      await overlay.requestFullscreen?.();
+      await (screen.orientation as any)?.lock?.('landscape');
+    } catch {
+      // iPhone y algunos navegadores no lo permiten: nos quedamos con la rotación CSS.
+    }
+    updateRotation();
+  }
+
+  function closeFull() {
+    if (overlay.hidden) return;
+    overlay.hidden = true;
+    document.documentElement.style.overflow = '';
+    try { (screen.orientation as any)?.unlock?.(); } catch {}
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }
+
+  document.getElementById('tt-expand')!.addEventListener('click', openFull);
+  document.getElementById('tt-close')!.addEventListener('click', closeFull);
+  overlay.querySelectorAll<HTMLElement>('[data-zoom]').forEach((b) =>
+    b.addEventListener('click', () => setZoom(zoom + Number(b.dataset.zoom))));
+  portrait.addEventListener('change', () => { if (!overlay.hidden) updateRotation(); });
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) closeFull(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFull(); });
+
+  /* ---------- Datos de Google Sheets ---------- */
   async function loadSheet() {
     if (!SHEET_ID) return;
-    const section = document.getElementById('horario');
-    const target = document.getElementById('timetable');
-    if (!section || !target) return;
-    const lang = (section.dataset.lang ?? 'es') as Lang;
     try {
       const res = await fetch(sheetCsvUrl(SHEET_ID), { cache: 'no-store' });
       if (!res.ok) return;
       const rows = parseSchedule(await res.text());
       if (!rows.length) return; // hoja vacía o mal formada: se queda el horario por defecto
       target.innerHTML = renderSchedule(rows, lang);
+      selectDay(selectedDay);
       section.querySelectorAll<HTMLElement>('[data-class]').forEach((el) => {
         const times = classTimes(rows, el.dataset.class!, lang);
         if (times) el.innerHTML = times;
@@ -118,7 +209,7 @@ const rows = parseSchedule(defaultCsv);
   }
 
   /* ---------- Timetable (HTML generado, de ahí :global) ---------- */
-  .timetable {
+  .timetable--page {
     background: var(--clr-white);
     border-radius: calc(var(--radius) * 1.5);
     border: 1px solid rgba(75,191,181,0.2);
@@ -186,6 +277,144 @@ const rows = parseSchedule(defaultCsv);
 
   .timetable :global(.tt-list) {
     display: none;
+  }
+
+  /* ---------- Botón y vista a pantalla completa ---------- */
+  .schedule__expand {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem auto;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid rgba(75,191,181,0.35);
+    border-radius: 50px;
+    background: var(--clr-white);
+    color: var(--clr-primary-dark);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .schedule__expand svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--clr-white);
+  }
+
+  .tt-overlay[hidden] {
+    display: none;
+  }
+
+  .tt-overlay__inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Vertical sin bloqueo de orientación: se gira el contenido 90° */
+  .tt-overlay.is-rotated .tt-overlay__inner {
+    inset: auto;
+    top: 0;
+    left: 100%;
+    width: 100dvh;
+    height: 100vw;
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
+
+  .tt-overlay__bar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 1rem;
+    background: var(--clr-surface-dark);
+    color: var(--clr-white);
+  }
+
+  .tt-overlay__title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tt-overlay__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tt-overlay__btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: transparent;
+    color: var(--clr-white);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .tt-overlay__close {
+    background: var(--clr-primary);
+    border-color: var(--clr-primary);
+    font-size: 0.95rem;
+  }
+
+  .tt-overlay__scroll {
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .timetable--full {
+    min-width: 720px;
+    zoom: var(--tt-zoom, 1);
+  }
+
+  .timetable--full :global(.tt-table),
+  .timetable--full :global(.tt-row) {
+    gap: 0.25rem;
+  }
+
+  .timetable--full :global(.tt-row) {
+    grid-template-columns: 2.75rem repeat(var(--tt-days), minmax(0, 1fr));
+  }
+
+  .timetable--full :global(.tt-row--gap) {
+    margin-block-start: 0.5rem;
+  }
+
+  .timetable--full :global(.tt-day) {
+    padding: 0.35rem 0.25rem;
+    font-size: 0.68rem;
+  }
+
+  .timetable--full :global(.tt-time) {
+    font-size: 0.75rem;
+  }
+
+  .timetable--full :global(.tt-cell) {
+    min-height: 2.1rem;
+    border-radius: 6px;
+  }
+
+  .timetable--full :global(.tt-class) {
+    font-size: 0.68rem;
+    padding: 0.25rem 0.3rem;
+    border-radius: 6px;
+    line-height: 1.2;
   }
 
   /* ---------- Dance classes highlight ---------- */
@@ -282,49 +511,91 @@ const rows = parseSchedule(defaultCsv);
   }
 
   @media (max-width: 768px) {
-    .timetable {
+    .schedule__expand {
+      display: flex;
+    }
+
+    .timetable--page {
       padding: 1rem;
     }
 
-    .timetable :global(.tt-table) {
+    .timetable--page :global(.tt-table) {
       display: none;
     }
 
-    .timetable :global(.tt-list) {
-      display: grid;
-      gap: 1.5rem;
+    .timetable--page :global(.tt-list) {
+      display: block;
     }
 
-    .timetable :global(.tt-list-day h3) {
+    .timetable--page :global(.tt-tabs) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 0.3rem;
+      background: var(--clr-bg);
+      border-radius: 50px;
+      padding: 0.3rem;
+      margin-block-end: 1.25rem;
+    }
+
+    .timetable--page :global(.tt-tab) {
+      border: 0;
+      background: transparent;
+      border-radius: 50px;
+      padding: 0.55rem 0;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--clr-text-muted);
+      cursor: pointer;
+    }
+
+    .timetable--page :global(.tt-tab[aria-selected="true"]) {
+      background: var(--clr-surface-dark);
+      color: var(--clr-white);
+    }
+
+    .timetable--page :global(.tt-list-day) {
+      display: none;
+    }
+
+    .timetable--page :global(.tt-list-day.is-active) {
+      display: block;
+    }
+
+    .timetable--page :global(.tt-list-day h3) {
       font-family: var(--font-display);
       font-size: 1.4rem;
       font-weight: 600;
       color: var(--clr-text);
-      margin-block-end: 0.5rem;
-      padding-block-end: 0.35rem;
-      border-bottom: 1px solid rgba(75,191,181,0.25);
+      margin-block-end: 0.75rem;
     }
 
-    .timetable :global(.tt-list-day ul) {
+    .timetable--page :global(.tt-list-day ul) {
       list-style: none;
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
 
-    .timetable :global(.tt-list-day li) {
+    .timetable--page :global(.tt-list-day li) {
       display: grid;
       grid-template-columns: 3.25rem 1fr;
       gap: 0.6rem;
       align-items: center;
     }
 
-    .timetable :global(.tt-list-day .tt-class) {
+    .timetable--page :global(.tt-list-day .tt-class) {
       justify-content: flex-start;
       text-align: left;
-      padding: 0.6rem 0.8rem;
-      font-size: 0.9rem;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.92rem;
+    }
+
+    .timetable--page :global(.tt-empty) {
+      color: var(--clr-text-muted);
+      font-size: 0.95rem;
+      padding-block: 0.5rem;
     }
 
     .dance {
