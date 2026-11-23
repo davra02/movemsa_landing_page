@@ -7,6 +7,7 @@ const translations = {
     // Nav
     navWhy: 'Por qué',
     navActivities: 'Actividades',
+    navSchedule: 'Horario',
     navAbout: 'Nosotras',
     navContact: 'Contacto',
     navAriaMenu: 'Menú principal',
@@ -59,6 +60,24 @@ const translations = {
     act9Desc: 'Programas específicos para cada etapa de la maternidad. Cuidado, respeto y acompañamiento.',
     actMoreTitle: 'Y mucho más por venir',
     actMoreDesc: 'El proyecto sigue creciendo. Nuevas actividades, talleres y propuestas especiales en camino.',
+
+    // Schedule
+    scheduleLabel: 'Horario',
+    scheduleTitle: 'Encuentra tu clase',
+    scheduleIntro: 'Clases de lunes a viernes, por la mañana y por la tarde. Pulsa el horario para verlo a tamaño completo.',
+    scheduleImgAlt: 'Horario semanal de clases de MovEmSa, de lunes a viernes',
+    scheduleOpen: 'Ver horario a tamaño completo',
+    scheduleSwipe: 'Desliza para ver toda la semana →',
+    danceBadge: 'Novedad',
+    danceTitle: 'Clases de baile',
+    danceIntro: 'Mucho más que baile: muévete, exprésate y desconecta.',
+    dance1Title: 'Danza contemporánea',
+    dance1Times: 'Lunes y miércoles · 20:00<br/>Jueves · 12:00',
+    dance2Title: 'Bailes latinos',
+    dance2Sub: 'Bachata, salsa, merengue, chachachá… Sin pareja. Sin nivel.',
+    dance2Times: 'Martes y jueves · 20:00',
+    danceCta: 'Reserva tu clase',
+    danceImgAlt: 'Cartel de las clases de baile de MovEmSa: danza contemporánea y bailes latinos',
 
     // Team
     teamLabel: 'Sobre nosotras',
@@ -114,6 +133,7 @@ const translations = {
     // Nav
     navWhy: 'Why',
     navActivities: 'Activities',
+    navSchedule: 'Schedule',
     navAbout: 'About',
     navContact: 'Contact',
     navAriaMenu: 'Main menu',
@@ -166,6 +186,24 @@ const translations = {
     act9Desc: 'Specific programs for every stage of motherhood. Care, respect, and support throughout.',
     actMoreTitle: 'And much more to come',
     actMoreDesc: 'The project keeps growing. New activities, workshops, and special offerings on the way.',
+
+    // Schedule
+    scheduleLabel: 'Schedule',
+    scheduleTitle: 'Find your class',
+    scheduleIntro: 'Classes Monday to Friday, mornings and evenings. Tap the schedule to view it full size.',
+    scheduleImgAlt: 'MovEmSa weekly class schedule, Monday to Friday',
+    scheduleOpen: 'View full-size schedule',
+    scheduleSwipe: 'Swipe to see the whole week →',
+    danceBadge: 'New',
+    danceTitle: 'Dance classes',
+    danceIntro: 'Much more than dance: move, express yourself and unwind.',
+    dance1Title: 'Contemporary dance',
+    dance1Times: 'Monday & Wednesday · 20:00<br/>Thursday · 12:00',
+    dance2Title: 'Latin dance',
+    dance2Sub: 'Bachata, salsa, merengue, cha-cha-cha… No partner. No level needed.',
+    dance2Times: 'Tuesday & Thursday · 20:00',
+    danceCta: 'Book your class',
+    danceImgAlt: 'MovEmSa dance classes poster: contemporary dance and Latin dance',
 
     // Team
     teamLabel: 'About us',

@@ -1,0 +1,243 @@
+---
+import horarioSrc from '../assets/horario.jpeg';
+import bailesSrc from '../assets/clases_baile.jpeg';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="schedule" id="horario">
+  <div class="schedule__inner container">
+    <header class="schedule__header">
+      <span class="section-label">{t('scheduleLabel')}</span>
+      <h2 class="section-title">{t('scheduleTitle')}</h2>
+      <p class="schedule__intro">{t('scheduleIntro')}</p>
+    </header>
+
+    <p class="schedule__swipe" aria-hidden="true">{t('scheduleSwipe')}</p>
+    <a
+      href={horarioSrc.src}
+      target="_blank"
+      rel="noopener"
+      class="schedule__img-link"
+      aria-label={t('scheduleOpen')}
+    >
+      <img
+        src={horarioSrc.src}
+        width={horarioSrc.width}
+        height={horarioSrc.height}
+        alt={t('scheduleImgAlt')}
+        loading="lazy"
+        class="schedule__img"
+      />
+    </a>
+
+    <div class="dance">
+      <a href={bailesSrc.src} target="_blank" rel="noopener" class="dance__poster">
+        <img
+          src={bailesSrc.src}
+          width={bailesSrc.width}
+          height={bailesSrc.height}
+          alt={t('danceImgAlt')}
+          loading="lazy"
+        />
+      </a>
+
+      <div class="dance__info">
+        <span class="dance__badge">{t('danceBadge')}</span>
+        <h3 class="dance__title">{t('danceTitle')}</h3>
+        <p class="dance__intro">{t('danceIntro')}</p>
+
+        <ul class="dance__list">
+          <li class="dance__item">
+            <h4>{t('dance1Title')}</h4>
+            <p class="dance__times" set:html={t('dance1Times')} />
+          </li>
+          <li class="dance__item">
+            <h4>{t('dance2Title')}</h4>
+            <p class="dance__sub">{t('dance2Sub')}</p>
+            <p class="dance__times">{t('dance2Times')}</p>
+          </li>
+        </ul>
+
+        <a href="#contacto" class="btn-primary">{t('danceCta')}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="schedule__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,50 C360,0 1080,80 1440,30 L1440,80 L0,80 Z" fill="#163330"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .schedule {
+    position: relative;
+    background: var(--clr-bg);
+    padding-block: 5rem 9rem;
+    overflow: hidden;
+  }
+
+  .schedule__header {
+    text-align: center;
+    max-width: 560px;
+    margin-inline: auto;
+    margin-block-end: 3rem;
+  }
+
+  .schedule__header .section-label {
+    display: block;
+    margin-block-end: 0.75rem;
+  }
+
+  .schedule__intro {
+    margin-block-start: 1rem;
+    color: var(--clr-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .schedule__img-link {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius);
+  }
+
+  .schedule__swipe {
+    display: none;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+    margin-block-end: 0.75rem;
+  }
+
+  .schedule__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(22,51,48,0.1);
+    border: 1px solid rgba(75,191,181,0.2);
+  }
+
+  /* Dance classes highlight */
+  .dance {
+    margin-block-start: 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: center;
+    background: var(--clr-bg-alt);
+    border-radius: calc(var(--radius) * 1.5);
+    padding: 2.5rem;
+  }
+
+  .dance__poster img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 28px rgba(22,51,48,0.14);
+  }
+
+  .dance__badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    background: var(--clr-primary);
+    color: var(--clr-white);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .dance__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--clr-text);
+    margin-block: 0.75rem 0.5rem;
+  }
+
+  .dance__intro {
+    color: var(--clr-text-muted);
+    margin-block-end: 1.75rem;
+  }
+
+  .dance__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .dance__item {
+    background: var(--clr-white);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.35rem;
+    border-left: 4px solid var(--clr-primary);
+  }
+
+  .dance__item h4 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--clr-text);
+  }
+
+  .dance__sub {
+    font-size: 0.88rem;
+    color: var(--clr-text-muted);
+    margin-block-start: 0.15rem;
+  }
+
+  .dance__times {
+    margin-block-start: 0.4rem;
+    font-weight: 600;
+    color: var(--clr-primary-dark);
+    line-height: 1.6;
+  }
+
+  .schedule__wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    line-height: 0;
+  }
+
+  .schedule__wave svg {
+    width: 100%;
+    height: 80px;
+  }
+
+  @media (max-width: 768px) {
+    .schedule__swipe {
+      display: block;
+    }
+
+    .schedule__img {
+      width: 820px;
+      max-width: none;
+    }
+
+    .dance {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 1.5rem;
+    }
+
+    .dance__poster {
+      max-width: 360px;
+      margin-inline: auto;
+    }
+  }
+</style>
