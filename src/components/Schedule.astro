@@ -1,6 +1,7 @@
 ---
-import horarioSrc from '../assets/horario.jpeg';
 import bailesSrc from '../assets/clases_baile.jpeg';
+import defaultCsv from '../data/horario.csv?raw';
+import { parseSchedule, renderSchedule, classTimes } from '../lib/schedule';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -8,9 +9,12 @@ interface Props {
 }
 const { lang = 'es' } = Astro.props;
 const t = useTranslations(lang);
+
+// Horario por defecto (se ve si la hoja de Google no carga).
+const rows = parseSchedule(defaultCsv);
 ---
 
-<section class="schedule" id="horario">
+<section class="schedule" id="horario" data-lang={lang}>
   <div class="schedule__inner container">
     <header class="schedule__header">
       <span class="section-label">{t('scheduleLabel')}</span>
@@ -18,23 +22,7 @@ const t = useTranslations(lang);
       <p class="schedule__intro">{t('scheduleIntro')}</p>
     </header>
 
-    <p class="schedule__swipe" aria-hidden="true">{t('scheduleSwipe')}</p>
-    <a
-      href={horarioSrc.src}
-      target="_blank"
-      rel="noopener"
-      class="schedule__img-link"
-      aria-label={t('scheduleOpen')}
-    >
-      <img
-        src={horarioSrc.src}
-        width={horarioSrc.width}
-        height={horarioSrc.height}
-        alt={t('scheduleImgAlt')}
-        loading="lazy"
-        class="schedule__img"
-      />
-    </a>
+    <div class="timetable" id="timetable" set:html={renderSchedule(rows, lang)} />
 
     <div class="dance">
       <a href={bailesSrc.src} target="_blank" rel="noopener" class="dance__poster">
@@ -55,12 +43,12 @@ const t = useTranslations(lang);
         <ul class="dance__list">
           <li class="dance__item">
             <h4>{t('dance1Title')}</h4>
-            <p class="dance__times" set:html={t('dance1Times')} />
+            <p class="dance__times" data-class="Danza contemporánea" set:html={classTimes(rows, 'Danza contemporánea', lang)} />
           </li>
           <li class="dance__item">
             <h4>{t('dance2Title')}</h4>
             <p class="dance__sub">{t('dance2Sub')}</p>
-            <p class="dance__times">{t('dance2Times')}</p>
+            <p class="dance__times" data-class="Bailes latinos" set:html={classTimes(rows, 'Bailes latinos', lang)} />
           </li>
         </ul>
 
@@ -76,6 +64,32 @@ const t = useTranslations(lang);
     </svg>
   </div>
 </section>
+
+<script>
+  import { SHEET_ID, sheetCsvUrl, parseSchedule, renderSchedule, classTimes, type Lang } from '../lib/schedule';
+
+  async function loadSheet() {
+    if (!SHEET_ID) return;
+    const section = document.getElementById('horario');
+    const target = document.getElementById('timetable');
+    if (!section || !target) return;
+    const lang = (section.dataset.lang ?? 'es') as Lang;
+    try {
+      const res = await fetch(sheetCsvUrl(SHEET_ID), { cache: 'no-store' });
+      if (!res.ok) return;
+      const rows = parseSchedule(await res.text());
+      if (!rows.length) return; // hoja vacía o mal formada: se queda el horario por defecto
+      target.innerHTML = renderSchedule(rows, lang);
+      section.querySelectorAll<HTMLElement>('[data-class]').forEach((el) => {
+        const times = classTimes(rows, el.dataset.class!, lang);
+        if (times) el.innerHTML = times;
+      });
+    } catch {
+      // Sin conexión con Google: se queda el horario por defecto.
+    }
+  }
+  loadSheet();
+</script>
 
 <style>
   .schedule {
@@ -103,30 +117,78 @@ const t = useTranslations(lang);
     font-size: 1.05rem;
   }
 
-  .schedule__img-link {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: var(--radius);
-  }
-
-  .schedule__swipe {
-    display: none;
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--clr-text-muted);
-    margin-block-end: 0.75rem;
-  }
-
-  .schedule__img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius);
-    box-shadow: 0 8px 32px rgba(22,51,48,0.1);
+  /* ---------- Timetable (HTML generado, de ahí :global) ---------- */
+  .timetable {
+    background: var(--clr-white);
+    border-radius: calc(var(--radius) * 1.5);
     border: 1px solid rgba(75,191,181,0.2);
+    box-shadow: 0 8px 32px rgba(22,51,48,0.08);
+    padding: 1.5rem;
   }
 
-  /* Dance classes highlight */
+  .timetable :global(.tt-table) {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .timetable :global(.tt-row) {
+    display: grid;
+    grid-template-columns: 3.5rem repeat(var(--tt-days), minmax(0, 1fr));
+    gap: 0.4rem;
+    align-items: stretch;
+  }
+
+  .timetable :global(.tt-row--gap) {
+    margin-block-start: 1.1rem;
+  }
+
+  .timetable :global(.tt-day) {
+    background: var(--clr-surface-dark);
+    color: var(--clr-white);
+    border-radius: 8px;
+    padding: 0.55rem 0.25rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .timetable :global(.tt-time) {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--clr-text-muted);
+    display: flex;
+    align-items: center;
+  }
+
+  .timetable :global(.tt-cell) {
+    background: var(--clr-bg);
+    border-radius: 8px;
+    min-height: 3.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .timetable :global(.tt-class) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px;
+    padding: 0.5rem 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .timetable :global(.tt-list) {
+    display: none;
+  }
+
+  /* ---------- Dance classes highlight ---------- */
   .dance {
     margin-block-start: 4rem;
     display: grid;
@@ -220,13 +282,49 @@ const t = useTranslations(lang);
   }
 
   @media (max-width: 768px) {
-    .schedule__swipe {
-      display: block;
+    .timetable {
+      padding: 1rem;
     }
 
-    .schedule__img {
-      width: 820px;
-      max-width: none;
+    .timetable :global(.tt-table) {
+      display: none;
+    }
+
+    .timetable :global(.tt-list) {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .timetable :global(.tt-list-day h3) {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--clr-text);
+      margin-block-end: 0.5rem;
+      padding-block-end: 0.35rem;
+      border-bottom: 1px solid rgba(75,191,181,0.25);
+    }
+
+    .timetable :global(.tt-list-day ul) {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .timetable :global(.tt-list-day li) {
+      display: grid;
+      grid-template-columns: 3.25rem 1fr;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .timetable :global(.tt-list-day .tt-class) {
+      justify-content: flex-start;
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.9rem;
     }
 
     .dance {
